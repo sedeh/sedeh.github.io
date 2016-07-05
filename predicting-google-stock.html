@@ -1751,7 +1751,7 @@ YSBJ2lfGMwNJ0s4cBpIkh4EkyWEgScJhIEnCYSBJwmEgSQJ+AWX9XIuE1WVfAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can use the dataset I already downloaded which is located <a href="https://github.com/sedeh/github.io">here</a>. Specifically, download <code>terrorScores</code> and save it in the same folder where this jupyter notebook (.ipynb) file is located. Option 2 code is immediately below.</p>
+<p>You can use the dataset I already downloaded which is located <a href="https://github.com/sedeh/resources">here</a>. Specifically, download <code>terrorScores</code> and save it in the same folder where this jupyter notebook (.ipynb) file is located. Option 2 code is immediately below.</p>
 </div>
 </div>
 </div>
@@ -2583,7 +2583,7 @@ nGFxOBwOR1JxhsXhcDgcScUZFofD4XAklf8PnxorKPpgr1AAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we're ready to label our data. Each row in the dataset is called an <code>observation</code>. The columns contain <code>features</code> which relate to GOOG stock in some way. The <code>features</code> are also known as <code>predictors</code>. Each <code>observation</code> will get a <code>label</code> as follows. If the stock opens higher the next day, we'll label it as 1. Otherwise, we'll label it as 0.</p>
+<p>We're ready to label our data. Each row in the dataset is called an <code>observation</code>. The columns contain <code>features</code> which relate to GOOG stock in some way. The <code>features</code> are also known as <code>predictors</code>. Each <code>observation</code> will get a <code>label</code> as follows. If the stock opens higher the next day, we'll label it as 1. Otherwise, we'll label it as 0.</p>
 </div>
 </div>
 </div>
@@ -2930,7 +2930,7 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that the model is <code>"trained"</code>, we can use it to make predictions. So we pass in the test <code>predictors</code> and evaluate how well the model does at predicting the corresponding test <code>labels</code>.</p>
+<p>Now that the model is <code>"trained"</code>, we can use it to make predictions. We pass in the test <code>predictors</code> and evaluate how well the model does at predicting the corresponding test <code>labels</code>.</p>
 </div>
 </div>
 </div>
@@ -3199,7 +3199,7 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>Sensitivity</code> or <code>True Positive Rate</code> tells us how effective the model is at predicting positive outcomes. If sensitivity is low, it means that the model isn't effective in predicting positive cases. In our case, positive case is that GOOG will open higher the next day.</p>
+<p><code>Sensitivity</code> or <code>True Positive Rate</code> tells us how effective the model is at predicting positive outcomes. If sensitivity is low, it means that the model isn't effective at predicting positive cases. In our case, positive case is that GOOG will open higher the next day.</p>
 </div>
 </div>
 </div>
@@ -3592,7 +3592,8 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You've seen this type of metrics before with the logistic regression model and you're likely more comfortable interpreting them. Notice that <code>sensitivity</code> is about <strong>63%</strong>. So, the model is about <strong>63%</strong> effective at predicting whether the stock will open higher the next day. So it appears terrorism news isn't a good predictor of GOOG stock prices. Does this match with your intuition?</p>
+<p>You've seen this type of metrics before with the logistic regression model and you're likely more comfortable interpreting them. Notice that <code>sensitivity</code> is about <strong>63%</strong>. So, the model is about <strong>63%</strong> effective at predicting whether the stock will open higher the next day.</p>
+<p>Overall, it appears that terrorism news isn't a good predictor of GOOG stock prices. Does this match your intuition?</p>
 <p>For us right now, this just means we're demystifying machine learning and getting some practice with it.</p>
 <p>Key takeaways from this whole process:</p>
 <ul>

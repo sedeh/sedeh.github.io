@@ -1714,7 +1714,7 @@ YSBJ2lfGMwNJ0s4cBpIkh4EkyWEgScJhIEnCYSBJwmEgSQJ+AWX9XIuE1WVfAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;You can use the dataset I already downloaded which is located &lt;a href="sedeh.github.com/placeholder"&gt;here&lt;/a&gt;. Option 2 code is immediately below.&lt;/p&gt;
+&lt;p&gt;You can use the dataset I already downloaded which is located &lt;a href="https://github.com/sedeh/resources"&gt;here&lt;/a&gt;. Specifically, download &lt;code&gt;terrorScores&lt;/code&gt; and save it in the same folder where this jupyter notebook (.ipynb) file is located. Option 2 code is immediately below.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1723,8 +1723,8 @@ YSBJ2lfGMwNJ0s4cBpIkh4EkyWEgScJhIEnCYSBJwmEgSQJ+AWX9XIuE1WVfAAAAAElFTkSuQmCC
 &lt;div class="prompt input_prompt"&gt;In [6]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;cPickle&lt;/span&gt;
-&lt;span class="n"&gt;terrorScores&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cPickle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'terrorScores'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'rb'&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#import cPickle&lt;/span&gt;
+&lt;span class="c1"&gt;#terrorScores = cPickle.load(open('terrorScores', 'rb'))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2546,7 +2546,7 @@ nGFxOBwOR1JxhsXhcDgcScUZFofD4XAklf8PnxorKPpgr1AAAAAASUVORK5CYII=
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Now, we're ready to label our data. Each row in the dataset is called an &lt;code&gt;observation&lt;/code&gt;. The columns contain &lt;code&gt;features&lt;/code&gt; which relate to GOOG stock in some way. The &lt;code&gt;features&lt;/code&gt; are also known as &lt;code&gt;predictors&lt;/code&gt;. Each &lt;code&gt;observation&lt;/code&gt; will get a &lt;code&gt;label&lt;/code&gt; as follows. If the stock opens higher the next day, we'll label it as 1. Otherwise, we'll label it as 0.&lt;/p&gt;
+&lt;p&gt;We're ready to label our data. Each row in the dataset is called an &lt;code&gt;observation&lt;/code&gt;. The columns contain &lt;code&gt;features&lt;/code&gt; which relate to GOOG stock in some way. The &lt;code&gt;features&lt;/code&gt; are also known as &lt;code&gt;predictors&lt;/code&gt;. Each &lt;code&gt;observation&lt;/code&gt; will get a &lt;code&gt;label&lt;/code&gt; as follows. If the stock opens higher the next day, we'll label it as 1. Otherwise, we'll label it as 0.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2893,7 +2893,7 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Now that the model is &lt;code&gt;"trained"&lt;/code&gt;, we can use it to make predictions. So we pass in the test &lt;code&gt;predictors&lt;/code&gt; and evaluate how well the model does at predicting the corresponding test &lt;code&gt;labels&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now that the model is &lt;code&gt;"trained"&lt;/code&gt;, we can use it to make predictions. We pass in the test &lt;code&gt;predictors&lt;/code&gt; and evaluate how well the model does at predicting the corresponding test &lt;code&gt;labels&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3162,7 +3162,7 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;&lt;code&gt;Sensitivity&lt;/code&gt; or &lt;code&gt;True Positive Rate&lt;/code&gt; tells us how effective the model is at predicting positive outcomes. If sensitivity is low, it means that the model isn't effective in predicting positive cases. In our case, positive case is that GOOG will open higher the next day.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Sensitivity&lt;/code&gt; or &lt;code&gt;True Positive Rate&lt;/code&gt; tells us how effective the model is at predicting positive outcomes. If sensitivity is low, it means that the model isn't effective at predicting positive cases. In our case, positive case is that GOOG will open higher the next day.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3555,7 +3555,8 @@ BiIiomIgIiIqBiIigoqBiIigYiAiIqgYiIgIKgYiIgL8P2SG62BKT0FuAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;You've seen this type of metrics before with the logistic regression model and you're likely more comfortable interpreting them. Notice that &lt;code&gt;sensitivity&lt;/code&gt; is about &lt;strong&gt;63%&lt;/strong&gt;. So, the model is about &lt;strong&gt;63%&lt;/strong&gt; effective at predicting whether the stock will open higher the next day. So it appears terrorism news isn't a good predictor of GOOG stock prices. Does this match with your intuition?&lt;/p&gt;
+&lt;p&gt;You've seen this type of metrics before with the logistic regression model and you're likely more comfortable interpreting them. Notice that &lt;code&gt;sensitivity&lt;/code&gt; is about &lt;strong&gt;63%&lt;/strong&gt;. So, the model is about &lt;strong&gt;63%&lt;/strong&gt; effective at predicting whether the stock will open higher the next day.&lt;/p&gt;
+&lt;p&gt;Overall, it appears that terrorism news isn't a good predictor of GOOG stock prices. Does this match your intuition?&lt;/p&gt;
 &lt;p&gt;For us right now, this just means we're demystifying machine learning and getting some practice with it.&lt;/p&gt;
 &lt;p&gt;Key takeaways from this whole process:&lt;/p&gt;
 &lt;ul&gt;
