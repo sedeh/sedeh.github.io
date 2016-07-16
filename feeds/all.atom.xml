@@ -4638,7 +4638,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This blog is a continuation of &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part1.html"&gt;Where the data science jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called the &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
+&lt;p&gt;This blog is a continuation of &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part1.html"&gt;Where the data science jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called the &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
 &lt;p&gt;We can take advantage of this information to gain insight about the general U.S. job market. In particular, we're going to look at data science related jobs.&lt;/p&gt;
 &lt;p&gt;In part 1, we downloaded, cleaned and enriched the dataset. Now, let's start probing the dataset.&lt;/p&gt;
 &lt;/div&gt;
@@ -6041,11 +6041,7 @@ h6:hover .anchor-link {
 &lt;div class="prompt input_prompt"&gt;In [2]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;urlopen&lt;/span&gt;
-
-&lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"http://www.math.uah.edu/stat/data/Fisher.csv"&lt;/span&gt;
+&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"http://www.math.uah.edu/stat/data/Fisher.csv"&lt;/span&gt;
 &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     
@@ -6137,6 +6133,15 @@ cpu cores: 8
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;
+&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;I couldn't get this notebook to run on Windows 10. It appears that Windows 10 has trouble running a jupyter notebook containing multiprocessing code. I had to spurn up an Amazon EC2 Linux instance (m4.2xlarge) and it ran the notebook without any problem. If you successfully ran the notebook on Windows 10, I like to hear what you did!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -7153,7 +7158,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;In this post, we're going to retrieve and clean salary data for data science related jobs. In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part2.html"&gt;Where the data science jobs are (part 2)&lt;/a&gt;, we'll analyze the data and gain insights into data science jobs.&lt;/p&gt;
+&lt;p&gt;In this post, we're going to retrieve and clean salary data for data science related jobs. In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html"&gt;Where the data science jobs are (part 2)&lt;/a&gt;, we'll analyze the data and gain insights into data science jobs.&lt;/p&gt;
 &lt;p&gt;We're going to source the job data from the U.S. Department of Labor (DOL). When a U.S. company wanta to hire a non-U.S. worker, the company is required to file a work visa (H1B) or permanent residency (greencard) application with DOL. As part of the application, the company must disclose how much it will pay the non-U.S. worker. The company is also required to disclose the &lt;code&gt;Prevailing Wage&lt;/code&gt;, i.e. how much U.S. workers in similar positions are being paid. The idea is to ensure that hiring non-U.S. workers does not negatively affect the job market for U.S. workers.&lt;/p&gt;
 &lt;p&gt;We'll take advantage of this publicly available data to explore information about data science related jobs. For this analysis, we're going to consider H1B work visa applications from 2002 to 2015.&lt;/p&gt;
 &lt;/div&gt;

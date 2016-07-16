@@ -1135,11 +1135,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"http://www.math.uah.edu/stat/data/Fisher.csv"</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">"http://www.math.uah.edu/stat/data/Fisher.csv"</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
     
@@ -1231,6 +1227,15 @@ cpu cores: 8
 </pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I couldn't get this notebook to run on Windows 10. It appears that Windows 10 has trouble running a jupyter notebook containing multiprocessing code. I had to spurn up an Amazon EC2 Linux instance (m4.2xlarge) and it ran the notebook without any problem. If you successfully ran the notebook on Windows 10, I like to hear what you did!</p>
 </div>
 </div>
 </div>
