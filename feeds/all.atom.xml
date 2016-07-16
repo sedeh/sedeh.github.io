@@ -1714,7 +1714,7 @@ YSBJ2lfGMwNJ0s4cBpIkh4EkyWEgScJhIEnCYSBJwmEgSQJ+AWX9XIuE1WVfAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;You can use the dataset I already downloaded which is located &lt;a href="https://github.com/sedeh/resources"&gt;here&lt;/a&gt;. Specifically, download &lt;code&gt;terrorScores&lt;/code&gt; and save it in the same folder where this jupyter notebook (.ipynb) file is located. Option 2 code is immediately below.&lt;/p&gt;
+&lt;p&gt;You can use the dataset I already downloaded which is located &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/"&gt;here&lt;/a&gt;. Specifically, download &lt;code&gt;terrorScores&lt;/code&gt; and save it in the same folder where this jupyter notebook (.ipynb) file is located. Option 2 code is immediately below.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -7253,7 +7253,7 @@ cpu cores: 8
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The Python script to download the data is &lt;a href="https://github.com/sedeh/github.io/blob/master/h1bdata_download.py"&gt;here&lt;/a&gt;. The data is &lt;strong&gt;561MB&lt;/strong&gt;. Let's read it in and see what it looks like.&lt;/p&gt;
+&lt;p&gt;The Python script to download the data is &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/h1bdata_download.py"&gt;here&lt;/a&gt;. The data is &lt;strong&gt;561MB&lt;/strong&gt;. Let's read it in and see what it looks like.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -8114,7 +8114,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Let's address the second issue and convert state abbreviation in the work visa dataset to state full name using the list &lt;a href="https://raw.githubusercontent.com/sedeh/github.io/master/states.json"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Let's address the second issue and convert state abbreviation in the work visa dataset to state full name using the list &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/states.txt"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
