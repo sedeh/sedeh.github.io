@@ -985,7 +985,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This blog is a continuation of &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part1"&gt;Where the data science jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called the &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
+&lt;p&gt;This blog is a continuation of &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part1.html"&gt;Where the data science jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called the &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
 &lt;p&gt;We can take advantage of this information to gain insight about the general U.S. job market. In particular, we're going to look at data science related jobs.&lt;/p&gt;
 &lt;p&gt;In part 1, we downloaded, cleaned and enriched the dataset. Now, let's start probing the dataset.&lt;/p&gt;
 &lt;/div&gt;
@@ -2273,7 +2273,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;In this post, we're going to retrieve and clean salary data for data science related jobs. In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part2"&gt;Where the data science jobs are (part 2)&lt;/a&gt;, we'll analyze the data and gain insights into data science jobs.&lt;/p&gt;
+&lt;p&gt;In this post, we're going to retrieve and clean salary data for data science related jobs. In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs_are_part2.html"&gt;Where the data science jobs are (part 2)&lt;/a&gt;, we'll analyze the data and gain insights into data science jobs.&lt;/p&gt;
 &lt;p&gt;We're going to source the job data from the U.S. Department of Labor (DOL). When a U.S. company wanta to hire a non-U.S. worker, the company is required to file a work visa (H1B) or permanent residency (greencard) application with DOL. As part of the application, the company must disclose how much it will pay the non-U.S. worker. The company is also required to disclose the &lt;code&gt;Prevailing Wage&lt;/code&gt;, i.e. how much U.S. workers in similar positions are being paid. The idea is to ensure that hiring non-U.S. workers does not negatively affect the job market for U.S. workers.&lt;/p&gt;
 &lt;p&gt;We'll take advantage of this publicly available data to explore information about data science related jobs. For this analysis, we're going to consider H1B work visa applications from 2002 to 2015.&lt;/p&gt;
 &lt;/div&gt;
@@ -3653,7 +3653,7 @@ dsJobsDF_final has 208595 rows and 10 columns
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The data is now ready for prime time! We're going to use it to explore &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2"&gt;Where the data science jobs are&lt;/a&gt;. Before we save the data, let's quickly convert the date string in &lt;code&gt;Submitted_Date&lt;/code&gt; column to &lt;code&gt;datetime&lt;/code&gt; and then we can save away.&lt;/p&gt;
+&lt;p&gt;The data is now ready for prime time! We're going to use it to explore &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html"&gt;Where the data science jobs are&lt;/a&gt;. Before we save the data, let's quickly convert the date string in &lt;code&gt;Submitted_Date&lt;/code&gt; column to &lt;code&gt;datetime&lt;/code&gt; and then we can save away.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
