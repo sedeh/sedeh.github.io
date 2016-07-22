@@ -1016,7 +1016,7 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Where-the-data-science-jobs-are?-(Part-1)">Where the data science jobs are? (Part 1)<a class="anchor-link" href="#Where-the-data-science-jobs-are?-(Part-1)">¶</a></h1>
+<h1 id="Where-the-data-science-related-jobs-are?-(Part-1)">Where the data science related jobs are? (Part 1)<a class="anchor-link" href="#Where-the-data-science-related-jobs-are?-(Part-1)">¶</a></h1>
 </div>
 </div>
 </div>
@@ -1025,9 +1025,15 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this post, we're going to retrieve and clean salary data for data science related jobs. In the next installment, <a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html">Where the data science jobs are (part 2)</a>, we'll analyze the data and gain insights into data science jobs.</p>
-<p>We're going to source the job data from the U.S. Department of Labor (DOL). When a U.S. company wanta to hire a non-U.S. worker, the company is required to file a work visa (H1B) or permanent residency (greencard) application with DOL. As part of the application, the company must disclose how much it will pay the non-U.S. worker. The company is also required to disclose the <code>Prevailing Wage</code>, i.e. how much U.S. workers in similar positions are being paid. The idea is to ensure that hiring non-U.S. workers does not negatively affect the job market for U.S. workers.</p>
-<p>We'll take advantage of this publicly available data to explore information about data science related jobs. For this analysis, we're going to consider H1B work visa applications from 2002 to 2015.</p>
+<p>In this post, we're going to curate, clean and enrich messy work visa data from the U.S. Department of Labor. In the next installment, <a href="https://github.com/sedeh/github.io/blob/master/projects/where_the_data_science_related_jobs_are_part2.ipynb">Where the data science related jobs are (part 2)</a>, we'll probe the prepped dataset for insights and trends in data science related jobs, including:</p>
+<ul>
+<li>The Top 10 and Bottom 10 States for Data Science Related Jobs</li>
+<li>The Top Paying States for Data Science Related Jobs</li>
+<li>The Top Paying Companies for Data Science Related Jobs</li>
+</ul>
+<p>And more.</p>
+<p>When a U.S. company wants to hire a non-U.S. worker, the company is required to file a work visa (H1B) or permanent residency (greencard) application with DOL. As part of the application, the company must disclose how much it will pay the non-U.S. worker. The company is also required to disclose the <code>Prevailing Wage</code> for the job, i.e. how much U.S. workers in similar positions are being paid. The idea is to ensure that hiring non-U.S. workers does not negatively affect the job market for U.S. workers.</p>
+<p>We'll take advantage of this publicly available data to explore information about data science related jobs. For this analysis, we're going to consider H1B work visa applications from <strong>2002 to 2015</strong>.</p>
 </div>
 </div>
 </div>
@@ -1056,6 +1062,7 @@ h6:hover .anchor-link {
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -1065,7 +1072,7 @@ h6:hover .anchor-link {
 <span class="c1"># For now, let's turn off panda's warning</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="bp">None</span> 
 
-<span class="c1"># Snippets like this will be used thruout the code to get idea of program runtime</span>
+<span class="c1"># Snippets like this is used thruout the code to get idea of runtime for different parts of the pipeline</span>
 <span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> 
 </pre></div>
 </div>
@@ -1077,7 +1084,7 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's also get some system info to help with your troubleshooting in the likely event you're using a different environment from the one I used in developing and testing this code.</p>
+<p>Let's also get some system information to help with any troubleshooting issues in the likely event you're running this code in a different environment than the one I used. I tested this code on an Amazon EC2 m4.2xlarge instance.</p>
 </div>
 </div>
 </div>
@@ -1098,7 +1105,7 @@ h6:hover .anchor-link {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Python 3.5.2 :: Anaconda 4.1.1 (64-bit)
-Linux-3.13.0-74-generic-x86_64-with-debian-jessie-sid
+Linux-3.13.0-92-generic-x86_64-with-debian-jessie-sid
 cpu cores: 8
 </pre>
 </div>
@@ -1120,7 +1127,7 @@ cpu cores: 8
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The Python script to download the data is <a href="https://github.com/sedeh/github.io/blob/master/resources/h1bdata_download.py">here</a>. The data is <strong>561MB</strong>. Let's read it in and see what it looks like.</p>
+<p>The Python script to download the data is <a href="https://github.com/sedeh/github.io/blob/master/resources/h1bdata_download.py">here</a>. The data is fairly large at <strong>864 mb</strong>. Let's read it in and see what it looks like.</p>
 </div>
 </div>
 </div>
@@ -1131,9 +1138,10 @@ cpu cores: 8
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">h1bdataDF</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">'h1bdataDF.pkl'</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h1bdataDF</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">"h1bdataDF has {0} rows and {1} columns"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h1bdataDF</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">h1bdataDF</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">h1bdataDF</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1144,36 +1152,38 @@ cpu cores: 8
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 
-h1bdataDF has 3886329 rows and 14 columns
-
-
-        Submitted_Date      Case_Number                      Employer_Name  \
-0    10/1/2006 0:03:29  I-06274-2831343     Solar Link International, Inc.   
-1    10/1/2006 1:47:12  I-06274-2831345           Friendship Corner School   
-2   10/3/2006 13:18:55  I-06274-2831347  The Underground World Corporation   
-3  10/23/2006 20:11:19  I-06274-2831349                       Solutia Inc.   
-4    10/1/2006 8:07:17  I-06274-2831351        Trustmark Insurance Company   
+        Submitted_Date      Case_Number                Employer_Name  \
+0  2002-01-14 09:46:00  I-02014-0000001             Monsanto Company   
+1  2002-01-14 09:49:00  I-02014-0000003            Priceline.com LLC   
+2  2002-01-14 09:58:00  I-02014-0000005     Vestrust Securities L.P.   
+3  2002-01-14 10:08:00  I-02014-0000007  Cleveland Clinic Foundation   
+4  2002-01-14 10:08:00  I-02014-0000009      World Data Incorporated   
 
   Employer_City Employer_State Employer_Postal_Code  \
-0       Ontario             CA                91761   
-1      Bartlett             IL                60103   
-2     Royal Oak             MI                48067   
-3     St. Louis             MO                63141   
-4   Lake Forest             IL                60045   
+0     St. Louis             MO           63167        
+1       Norwalk             CT           06954        
+2  Coral Gables             FL           33134        
+3     Cleveland             OH           44195        
+4    Washington             DC           20036        
 
-                                   Job_Title Approval_Status  Wage_Rate  \
-0                                 Accountant       Certified  $36000.00   
-1                       Kindergarten Teacher       Certified  $23500.00   
-2                        Industrial Designer       Certified  $73750.00   
-3  OFFSC Supervisor & Manufacturing Engineer       Certified  $68500.00   
-4                             System Analyst       Certified  $62738.00   
+                        Job_Title Approval_Status     Wage_Rate  \
+0             MOLECULAR BIOLOGIST       Certified   66700.00000   
+1     Principal Software Engineer       Certified  123936.00000   
+2  Associate Sales & Distribution       Certified   40000.00000   
+3              resident physician       Certified   35995.00000   
+4         Market Research Analyst       Certified   35608.00000   
 
-  Wage_Rate_Unit Part_Time    Work_City Work_State Prevailing_Wage  
-0           Year         N      Ontario         CA       $36000.00  
-1           Year         N     Bartlett         IL       $23480.00  
-2           Year         N    Royal Oak         MI       $59072.00  
-3           Year         N  Springfield         MO       $65520.00  
-4           Year         N  Lake Forest         IL       $52478.00  
+  Wage_Rate_Unit Part_Time     Work_City Work_State Prevailing_Wage  
+0           Year         N     ST. LOUIS         MO     38869.00000  
+1           Year         N       Norwalk         CT     70138.00000  
+2           Year         N  Coral Gables         FL     35298.00000  
+3           Year         N     Cleveland         OH     37208.00000  
+4           Year         N    Washington         DC     37482.00000  
+
+
+h1bdataDF has 5231213 rows and 14 columns
+
+
 </pre>
 </div>
 </div>
@@ -1194,7 +1204,7 @@ h1bdataDF has 3886329 rows and 14 columns
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So we've about 4 million records. Let's remove any duplicate application that may be in the record.</p>
+<p>So we've about 5 million records. Let's remove any duplicate applications there may be in the record.</p>
 </div>
 </div>
 </div>
@@ -1216,7 +1226,7 @@ h1bdataDF has 3886329 rows and 14 columns
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 
-h1bdataDF2 has 3788868 rows and 14 columns
+h1bdataDF2 has 5133079 rows and 14 columns
 </pre>
 </div>
 </div>
@@ -1228,7 +1238,7 @@ h1bdataDF2 has 3788868 rows and 14 columns
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's see the available options for <code>Approval_Status</code> field.</p>
+<p>Let's see the available options for <code>Approval_Status</code> column.</p>
 </div>
 </div>
 </div>
@@ -1246,7 +1256,9 @@ h1bdataDF2 has 3788868 rows and 14 columns
 <div class="output">
 <div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>array(['Certified', 'Denied', 'Hold', 'Pending', None, 'DENIED',
+<pre>array(['Certified', 'Denied', None, '32000.00000', 'Pending', 'Hold',
+       'Debarred', '', 'roye@fragomen.com', 'omboko@jacksonlewis.com',
+       'aespiritusanto@fragomen.c', 'mkwok@mltsf.com', 'DENIED',
        'CERTIFIED', 'WITHDRAWN', 'CERTIFIED-WITHDRAWN',
        'PENDING QUALITY AND COMPLIANCE REVIEW - UNASSIGNED', 'REJECTED',
        'INVALIDATED'], dtype=object)</pre>
@@ -1260,7 +1272,7 @@ h1bdataDF2 has 3788868 rows and 14 columns
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For our purpose, it makes sense to keep only applications that were <code>certified</code>. A <code>denied</code> application for example does not give you a lot of confidence about the quality of the application. Before we do that, we need to first remove rows with <code>NA</code>s in the <code>Approval_Status</code> column.</p>
+<p>For our purpose, it makes sense to keep only applications that were <code>certified</code>. For example, a <code>denied</code> application does not give us a lot of confidence about the quality of the application. Before we do that, we need to first remove rows with <code>None</code> in <code>Approval_Status</code> column.</p>
 </div>
 </div>
 </div>
@@ -1281,8 +1293,8 @@ h1bdataDF2 has 3788868 rows and 14 columns
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>filteredDF: (3788867, 14)
-certifiedDF: (3550156, 14)
+<pre>filteredDF: (5133076, 14)
+certifiedDF: (4882580, 14)
 </pre>
 </div>
 </div>
@@ -1303,8 +1315,7 @@ certifiedDF: (3550156, 14)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we're ready to select applications filed for data science related jobs. I chose the selection criteria based on my view and research of the data science field. But this isn't perfect and feel free to swap in your own criteria :).</p>
-<p>First, let's make sure <code>Job_Title</code> column contains only <code>string</code>s.</p>
+<p>We'll use <code>Job_Title</code> column to select data science related jobs. Before we start doing anything with that column, let's first make sure it contains only <code>string</code>s.</p>
 </div>
 </div>
 </div>
@@ -1328,12 +1339,12 @@ certifiedDF: (3550156, 14)
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>       Job_Title
-435289   66007.9
-457835     75483
-473113     27.89
-494274     71400
-546898    541613
+<pre>        Job_Title
+1780173   66007.9
+1802719     75483
+1817997     27.89
+1839158     71400
+1891782    541613
 </pre>
 </div>
 </div>
@@ -1364,7 +1375,7 @@ certifiedDF: (3550156, 14)
 <div class="output">
 <div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>(3550104, 14)</pre>
+<pre>(4882528, 14)</pre>
 </div>
 </div>
 </div>
@@ -1375,7 +1386,7 @@ certifiedDF: (3550156, 14)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can standardize the job titles.</p>
+<p>Now, we're ready to select and categorize data science related jobs. I chose the categorization criteria based on my view and research of the data science field. A better approach is perhaps to do some pre-clustering to see if interesting patterns emerge around the job titles. There isn't much context/synopsis with the job titles for clustering to give great results. In any case, my categorization criteria isn't perfect and I'm open to your ideas on this.</p>
 </div>
 </div>
 </div>
@@ -1428,7 +1439,7 @@ certifiedDF: (3550156, 14)
 <span class="n">dsJobsDF</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s2">"dsJobsDF shape: {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dsJobsDF</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">"Time to select data science related jobs and standardize job titles --- </span><span class="si">%s</span><span class="s2"> seconds ---"</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">"Time to categorize data science related jobs --- </span><span class="si">%s</span><span class="s2"> seconds ---"</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1437,8 +1448,8 @@ certifiedDF: (3550156, 14)
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>dsJobsDF shape: (209240, 15)
-Time to select data science related jobs and standardize job titles --- 354.9449350833893 seconds ---
+<pre>dsJobsDF shape: (285421, 15)
+Time to categorize data science related jobs --- 499.87189054489136 seconds ---
 </pre>
 </div>
 </div>
@@ -1477,7 +1488,7 @@ Time to select data science related jobs and standardize job titles --- 354.9449
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>['year' 'hour' 'month' 'week' '2 weeks' 'bi-weekly' 'yr' 'hr' 'wk' 'mth'
+<pre>['year' 'hour' '2 weeks' 'month' 'week' 'bi-weekly' 'yr' 'hr' 'wk' 'mth'
  'bi']
 </pre>
 </div>
@@ -1490,7 +1501,7 @@ Time to select data science related jobs and standardize job titles --- 354.9449
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Wage rates range from hourly, weekly, bi-weekly, monthly to yearly. Let's standardize to yearly. But we need to make sure that the wage columns are clean and do not contain special characters.</p>
+<p>Wage rates range from hourly, weekly, bi-weekly, monthly to yearly. Let's standardize to yearly.</p>
 </div>
 </div>
 </div>
@@ -1499,45 +1510,20 @@ Time to select data science related jobs and standardize job titles --- 354.9449
 <div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF</span><span class="o">.</span><span class="n">Wage_Rate</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF</span><span class="o">.</span><span class="n">Prevailing_Wage</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>['$48000.00' '$47359.00' '$48600.00' ..., '147014 -' '47819.00 -' '64501 -']
-['$40706.00' '$37149.00' '$37669.00' ..., 117915.0 43.54 147014.0]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see, the wage columns contains some special characters such as dollar sign and hyphen. Let's clean those out.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [12]:</div>
-<div class="inner_cell">
-<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
 <span class="n">dsJobsDF2</span> <span class="o">=</span> <span class="n">dsJobsDF</span>
 
-<span class="c1"># Ensure the columns are of string before applying regex</span>
+<span class="c1"># Using regex, remove any special characters such as hyphen or dollar sign in the wage columns.</span>
+<span class="c1"># Such characters are common in columns that contain monetary data such as the wage columns here. </span>
+<span class="c1"># Before applying regex, ensure the columns are of string type.</span>
+<span class="c1"># And remove rows with empty cells in the wage columns.</span>
 <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Prevailing_Wage'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Prevailing_Wage'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">dsJobsDF2</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">])</span>
+<span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Prevailing_Wage'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">dsJobsDF2</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Prevailing_Wage'</span><span class="p">])</span>
 
 <span class="c1"># Remove '$' and '-' signs from Wage_Rate column</span>
 <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="p">[</span><span class="s1">'Wage_Rate'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'\$|-.*'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
@@ -1546,92 +1532,12 @@ Time to select data science related jobs and standardize job titles --- 354.9449
         
 <span class="c1"># Convert the cleaned wage columns to float</span>
 <span class="n">dsJobsDF2</span><span class="p">[[</span><span class="s1">'Wage_Rate'</span><span class="p">,</span><span class="s1">'Prevailing_Wage'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dsJobsDF2</span><span class="p">[[</span><span class="s1">'Wage_Rate'</span><span class="p">,</span><span class="s1">'Prevailing_Wage'</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">'dsJobsDF2: {0}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">"Time to clean wage columns --- </span><span class="si">%s</span><span class="s2"> seconds ---"</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(209240, 15)
-Time to clean wage columns --- 1.0070388317108154 seconds ---
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's see what the wage columns look like now.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [13]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">Prevailing_Wage</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[  4.07060000e+04   3.71490000e+04   3.76690000e+04 ...,   1.17915000e+05
-   4.35400000e+01   1.47014000e+05]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [14]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF2</span><span class="o">.</span><span class="n">Wage_Rate</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[  4.80000000e+04   4.73590000e+04   4.86000000e+04 ...,   4.35400000e+01
-   5.05000000e+03   1.47014000e+05]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>It appears we successfully removed all special characters in the wage columns. Now, finally, we can standardize wage to yearly.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [15]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="c1"># Now we can standardize to yearly</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
 <span class="n">salary_offered</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">salary_prevailing</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1660,9 +1566,9 @@ Time to clean wage columns --- 1.0070388317108154 seconds ---
 <span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Salary_Offered'</span><span class="p">])</span>
 <span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Salary_Prevailing'</span><span class="p">])</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s2">"Time to standardize salary --- </span><span class="si">%s</span><span class="s2"> seconds ---"</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">'dsJobsDF3: {0}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 <span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># Resets row index so they start from 0</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">"Time to standardize salary --- </span><span class="si">%s</span><span class="s2"> seconds ---"</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1671,8 +1577,10 @@ Time to clean wage columns --- 1.0070388317108154 seconds ---
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to standardize salary --- 27.00463628768921 seconds ---
-dsJobsDF3: (209232, 17)
+<pre>dsJobsDF2: (285413, 15)
+Time to clean wage columns --- 1.7312259674072266 seconds ---
+dsJobsDF3: (285413, 17)
+Time to standardize salary --- 37.64387631416321 seconds ---
 </pre>
 </div>
 </div>
@@ -1684,18 +1592,18 @@ dsJobsDF3: (209232, 17)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Many of the salary information seem question. We've many wages that seem unbelievably high. In data frame below, row 2801 has hourly rate of the <strong>4330560.0</strong>. At the other extreme, we've annual salary of <strong>23.37</strong> for row <strong>24343</strong>. These values are likely entry errors and we should remove them.</p>
+<p>Let's get some descriptive statistics on <code>Salary_Offered</code> column to see the range of salaries we're dealing with here.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [16]:</div>
+<div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="p">[</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o">></span> <span class="mi">1000000</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF</span><span class="p">[</span><span class="n">dsJobsDF</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o"><</span> <span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="p">[</span><span class="s2">"Salary_Offered"</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="p">[</span><span class="s2">"Salary_Offered"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1704,105 +1612,45 @@ dsJobsDF3: (209232, 17)
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>           Submitted_Date      Case_Number  \
-368    10/9/2006 17:12:11  I-06282-2844381   
-408   10/10/2006 14:16:26  I-06283-2845897   
-1865  11/15/2006 19:05:54  I-06319-2902685   
-2636   12/7/2006 18:24:27  I-06341-2931261   
-2801  12/13/2006 14:54:25  I-06347-2938439   
-
-                             Employer_Name Employer_City Employer_State  \
-368        JLT AEROSPACE(NORTH AMERICA)INC        LATHAM             NY   
-408               Anant B. Soni M.D., P.A.       Raleigh             NC   
-1865  Kismet Real Estate Investments, Inc.      Moorpark             CA   
-2636          LG Electronics Alabama, Inc.    Huntsville             AL   
-2801                       baik kwang corp     carlstadt             NJ   
-
-     Employer_Postal_Code                                       Job_Title  \
-368                 12110  Director of International Business Development   
-408                 27612                          Database Administrator   
-1865                93021                              Management Analyst   
-2636                35824                              Management Analyst   
-2801                07072                               financial analyst   
-
-     Approval_Status   Wage_Rate Wage_Rate_Unit Part_Time     Work_City  \
-368        Certified  20000000.0           Year         N  Coral Gables   
-408        Certified     27000.0           Hour         Y       Raleigh   
-1865       Certified     48000.0           Hour         N      Moorpark   
-2636       Certified   5399992.0           Year         N    Huntsville   
-2801       Certified      2082.0           Hour         Y     carlstadt   
-
-     Work_State  Prevailing_Wage        Job_Title_revised  Salary_Offered  \
-368          NY        5243700.0           market analyst      20000000.0   
-408          NC          17011.2  data architect/engineer      56160000.0   
-1865         CA          47154.0           market analyst      99840000.0   
-2636         AL          52146.0           market analyst       5399992.0   
-2801         NJ           2082.0           market analyst       4330560.0   
-
-      Salary_Prevailing  
-368           5243700.0  
-408          35383296.0  
-1865         98080320.0  
-2636            52146.0  
-2801          4330560.0  
+<pre>count    2.854130e+05
+mean     1.623086e+05
+std      4.644013e+06
+min      1.538000e+01
+25%      4.761100e+04
+50%      6.000000e+04
+75%      7.631500e+04
+max      1.322880e+09
+Name: Salary_Offered, dtype: float64
 
 
-
-            Submitted_Date         Case_Number  \
-24343  2009-07-16 00:00:00  I-200-09196-549892   
-24379  2009-07-16 00:00:00  I-200-09197-448940   
-25985  2009-09-04 00:00:00  I-200-09247-442999   
-26357  2009-09-15 00:00:00  I-200-09258-663062   
-26547  2009-09-18 00:00:00  I-200-09261-887645   
-
-                         Employer_Name Employer_City Employer_State  \
-24343                   TRADEPRO, INC.   NORTH MIAMI             FL   
-24379        BAYLOR RESEARCH INSTITUTE        DALLAS             TX   
-25985               COMPUTER AID, INC.     ALLENTOWN             PA   
-26357  KOMAL UDYOG INTERNATIONAL, INC.   CHILLICOTHE             IL   
-26547    FIVE DIAMOND COLD STORAGE INC        DELANO             CA   
-
-      Employer_Postal_Code                                 Job_Title  \
-24343                33181  MARKETING & BUSINESS DEVELOPMENT MANAGER   
-24379                75204                RESEARCH FINANCIAL ANALYST   
-25985                18104                            DATA ARCHITECT   
-26357                61523                          BUSINESS ANALYST   
-26547                93215                        MANAGEMENT ANALYST   
-
-      Approval_Status  Wage_Rate Wage_Rate_Unit Part_Time      Work_City  \
-24343       CERTIFIED      23.37           Year         Y    NORTH MIAMI   
-24379       CERTIFIED      26.45           Year         Y         DALLAS   
-25985       CERTIFIED      67.50           Year         Y  WASHINTON, DC   
-26357       CERTIFIED      25.00           Year         Y    CHILLICOTHE   
-26547       CERTIFIED      25.40           Year         Y         DELANO   
-
-      Work_State  Prevailing_Wage        Job_Title_revised  Salary_Offered  \
-24343         FL          42533.4           market analyst           23.37   
-24379         TX          50523.0           market analyst           26.45   
-25985         DC          79477.0  data architect/engineer           67.50   
-26357         IL          36629.0         business analyst           25.00   
-26547         CA          46197.0           market analyst           25.40   
-
-       Salary_Prevailing  
-24343            42533.4  
-24379            50523.0  
-25985            79477.0  
-26357            36629.0  
-26547            46197.0  
+60000.0
 </pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Wow, the maximum annual salary is <strong>1.3 billion</strong>! At the other extreme, the minimum is <strong>15.4</strong>. These are likely due to entry errors; we rarely run into people who are paid these kinds of salaries.</p>
+<p>The median salary, which is <strong>60000.0</strong>, is a reasonable reflection of the center of the distribution. For our analysis, we'll consider any salary as unlilkely (or an <code>outlier</code>) if it's less than <strong>23760</strong> or more than <strong>10</strong> times the median. I'm assuming that a data professional is at least making <strong>2</strong> times the federal poverty line which is at least <strong>11,880</strong> in 2016 (<strong>2</strong> x <strong>11,880</strong> = <strong>23760</strong>).</p>
+<p>The idea is that we want to consider salaries that are typical for the population. Investigating the outlying values can be a study in and of itself.</p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [17]:</div>
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let's keep salaries that are greater than 20,000 but less than 1.5 million</span>
-<span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o">></span> <span class="mi">20000</span><span class="p">)</span> <span class="o">&</span> <span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o"><</span> <span class="mi">1500000</span><span class="p">)]</span>
-<span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Prevailing</span> <span class="o">></span> <span class="mi">20000</span><span class="p">)</span> <span class="o">&</span> <span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Prevailing</span> <span class="o"><</span> <span class="mi">1500000</span><span class="p">)]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let's keep salaries that are greater than 23760 but less than 10 * the median salary</span>
+<span class="n">med_offered</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[</span><span class="s2">"Salary_Offered"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">med_prevailing</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[</span><span class="s2">"Salary_Prevailing"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o">></span> <span class="mi">23760</span><span class="p">)</span> <span class="o">&</span> <span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Offered</span> <span class="o"><</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">med_offered</span><span class="p">)]</span>
+<span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="p">[(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Prevailing</span> <span class="o">></span> <span class="mi">23760</span><span class="p">)</span> <span class="o">&</span> <span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Salary_Prevailing</span> <span class="o"><</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">med_prevailing</span><span class="p">)]</span>
 <span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -1810,9 +1658,9 @@ dsJobsDF3: (209232, 17)
 </div>
 <div class="output_wrapper">
 <div class="output">
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>(208610, 17)</pre>
+<pre>(283338, 17)</pre>
 </div>
 </div>
 </div>
@@ -1838,7 +1686,7 @@ dsJobsDF3: (209232, 17)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [18]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -1861,8 +1709,8 @@ dsJobsDF3: (209232, 17)
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>parityDF shape: (209240, 17)
-Time to read and clean BEA data --- 0.8698716163635254 seconds ---
+<pre>parityDF shape: (285421, 15)
+Time to read and clean BEA data --- 0.9652659893035889 seconds ---
 </pre>
 </div>
 </div>
@@ -1880,7 +1728,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [19]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">parityDF</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
@@ -1909,13 +1757,13 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We're almost ready to merge the price parity information with the salary data. The common column between both data frames is <code>State</code> and we should take a look at the <code>State</code> columns in both data frames to make sure they match.</p>
+<p>We're almost ready to merge the price parity information with the salary data. The common column between both data frames is <code>State</code> and we should take a look at <code>State</code> columns in both data frames to make sure they match.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [20]:</div>
+<div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">Work_State</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -1927,10 +1775,10 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>['TX' 'AL' 'FL' 'IL' 'PA' 'NY' 'MO' 'NJ' 'LA' 'CA' 'OK' 'WA' 'MA' 'WI' 'CO'
- 'MN' 'NC' 'VA' 'GA' 'MD' 'OH' 'VI' 'TN' 'CT' 'MI' 'AZ' 'RI' 'NH' 'DC' 'NM'
- 'NV' 'SC' 'HI' 'KY' 'NE' 'DE' 'ID' 'AR' 'MT' 'OR' 'IN' 'IA' 'ME' 'KS' 'AK'
- 'SD' 'MS' 'PR' 'ND' 'UT' 'GU' 'WY' 'VT' 'WV' 'FM' 'PW' 'AS' 'MH' 'MP']
+<pre>['DC' 'CA' 'MO' 'TX' 'NY' 'IL' 'MN' 'MD' 'NJ' 'MA' 'FL' 'CT' 'WA' 'NC' 'VA'
+ 'PA' 'DE' 'KY' 'GA' 'AZ' 'OH' 'IN' 'TN' 'NH' 'OR' 'MS' 'AL' 'NV' 'MI' 'WI'
+ 'SC' 'CO' 'OK' 'KS' 'LA' 'ID' 'AR' 'IA' 'RI' 'HI' 'UT' 'WY' 'AK' 'WV' 'PW'
+ 'NE' 'PR' 'ND' 'SD' 'VT' 'NM' 'ME' 'MT' 'VI' 'FM' 'AS' 'MH' 'GU' 'MP']
 </pre>
 </div>
 </div>
@@ -1939,7 +1787,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [21]:</div>
+<div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">parityDF</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -1972,7 +1820,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice two things. First, the two datasets use different format for state. Second, some states seem to be entered as cities instead. There are multiple cities in the U.S. called <code>Phoenix</code> or <code>Portland</code>. It's not even clear what the city <code>CT MET</code> might refer to. Instead of guessing at which state these cities might belong to, we can impute the employer <code>State</code> instead. Also notice that both columns have <code>nan</code> values which we need to address.</p>
+<p>Notice two things. First, the price parity dataset contains extraneous rows, <code>maximum</code>, <code>minimum</code>, <code>range</code> and <code>nan</code>. Second, the two datasets use different formats for state names.</p>
 </div>
 </div>
 </div>
@@ -1981,18 +1829,18 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's address the second issue and convert state abbreviation in the work visa dataset to state full name using the list <a href="https://github.com/sedeh/github.io/blob/master/resources/states.txt">here</a>.</p>
+<p>Let's address the second issue and convert state abbreviation in the work visa dataset to state full name using the list <a href="https://raw.githubusercontent.com/sedeh/github.io/master/resources/states.txt">here</a>.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [22]:</div>
+<div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF3</span> <span class="o">=</span> <span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'Employer_State'</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">'dsJobsDF3: {0}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dsJobsDF3</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/sedeh/github.io/master/states.txt'</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/sedeh/github.io/master/resources/states.txt'</span><span class="p">)</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 <span class="n">state_names_dict</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -2017,7 +1865,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>dsJobsDF3: (208595, 17)
+<pre>dsJobsDF3: (283323, 17)
 </pre>
 </div>
 </div>
@@ -2029,18 +1877,20 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can now remove the extraneous values in the price parity data, <code>maximum</code>, <code>minimum</code>, <code>range</code>, and <code>nanF</code>.</p>
+<p>We can now remove the extraneous rows in the price parity data and merge the parity and work visa datasets.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [23]:</div>
+<div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">parityDF2</span> <span class="o">=</span> <span class="n">parityDF</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>
 <span class="n">parityDF2</span> <span class="o">=</span> <span class="n">parityDF2</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'State'</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">'parityDF2: {0}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parityDF2</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">dsJobsDF5</span> <span class="o">=</span> <span class="n">dsJobsDF4</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">parityDF2</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Work_State'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'State'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'dsJobsDF5: {0}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dsJobsDF5</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2050,6 +1900,7 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>parityDF2: (51, 2)
+dsJobsDF5: (283323, 20)
 </pre>
 </div>
 </div>
@@ -2061,43 +1912,13 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can merge the parity and work visa datasets.</p>
+<p>We're ready to use the price parity information to adjust salary to reflect regional cost of living differences. Notice that not all states have price parity information; there is <code>nan</code> in the <code>Price_Deflator</code> column below. We should replace <code>nan</code> with <strong>100.0</strong> so salaries for those states remain unchanged after adjusting for cost of living differences.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [24]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF5</span> <span class="o">=</span> <span class="n">dsJobsDF4</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">parityDF2</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Work_State'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'State'</span><span class="p">)</span>
-<span class="n">dsJobsDF5</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>(208595, 20)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We're ready to use the price parity information to adjust salary to reflect regional cost of living differences. Notice that not all states have price parity information. You can see this more clearly below with the presence of <code>nan</code> in the <code>Price_Deflator</code> column. We should replace those <code>nan</code> values with 100.0 so the salary for those states will remain unchanged after adjusting for cost of living differences.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [25]:</div>
+<div class="prompt input_prompt">In [20]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">'nan present'</span><span class="p">)</span>
@@ -2116,21 +1937,21 @@ Time to read and clean BEA data --- 0.8698716163635254 seconds ---
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>nan present
-[ 102.9    93.65  105.35  107.5   104.95  122.75   94.9   122.1    97.3
-  120.     95.8   110.    114.1    99.2   108.65  104.05   97.65  109.8
-   97.9   118.1    95.35     nan   96.6   115.95  100.6   103.8   104.8
-  112.75  101.3   104.9   124.35   94.75   96.4   108.25   99.3    93.3
-  100.3   105.15   97.35   96.05  104.4    96.65  113.15   93.95   92.3
-   97.1   103.6   102.3   107.     94.3 ]
+[    nan  120.     94.9   102.9   122.75  107.5   104.05  118.1   122.1
+  114.1   105.35  115.95  110.     97.65  109.8   104.95  108.25   94.75
+   97.9   103.8    95.35   97.35   96.6   112.75  105.15   92.3    93.65
+  104.9   100.6    99.2   108.65   95.8    96.65   97.3    99.3    93.3
+   96.05  104.8   124.35  103.6   102.3   113.15   94.3    96.4    97.1
+   93.95  107.    101.3   104.4   100.3 ]
 
 
 nan replaced with 100.0
-[ 102.9    93.65  105.35  107.5   104.95  122.75   94.9   122.1    97.3
-  120.     95.8   110.    114.1    99.2   108.65  104.05   97.65  109.8
-   97.9   118.1    95.35  100.     96.6   115.95  100.6   103.8   104.8
-  112.75  101.3   104.9   124.35   94.75   96.4   108.25   99.3    93.3
-  100.3   105.15   97.35   96.05  104.4    96.65  113.15   93.95   92.3
-   97.1   103.6   102.3   107.     94.3 ]
+[ 100.    120.     94.9   102.9   122.75  107.5   104.05  118.1   122.1
+  114.1   105.35  115.95  110.     97.65  109.8   104.95  108.25   94.75
+   97.9   103.8    95.35   97.35   96.6   112.75  105.15   92.3    93.65
+  104.9   100.6    99.2   108.65   95.8    96.65   97.3    99.3    93.3
+   96.05  104.8   124.35  103.6   102.3   113.15   94.3    96.4    97.1
+   93.95  107.    101.3   104.4   100.3 ]
 </pre>
 </div>
 </div>
@@ -2142,13 +1963,13 @@ nan replaced with 100.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We're ready to adjust salary with the price parity information. This isn't perfect because we're using price parity information from 2012 and 2013 to adjust salary information from 2002 to 2016. However, it seems likely that inflation shows consistent trend from year to year among states. For e.g., New York has been more expensive to live in than Iowa for as long as we can remember.</p>
+<p>We're ready to adjust salary with the price parity information. This isn't perfect because we're using price parity information from <strong>2012 and 2013</strong> to adjust salary information from <strong>2002 to 2015</strong>. However, it seems likely that inflation shows consistent trend from year to year among states. For e.g., New York has been more expensive to live in than Iowa for as long as we can remember.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [26]:</div>
+<div class="prompt input_prompt">In [21]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -2173,7 +1994,7 @@ nan replaced with 100.0
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Time to adjust salary for inflation --- 43.80738282203674 seconds ---
+<pre>Time to adjust salary for inflation --- 59.78936195373535 seconds ---
 </pre>
 </div>
 </div>
@@ -2194,13 +2015,13 @@ nan replaced with 100.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Simply knowing that California has <strong>30,000</strong> data science related jobs compared to say <strong>3500</strong> for Alaska really does not paint the whole picture. Relative truth is better where we get a sense of the number of jobs per capita. So let's add population information from census.gov to help us do that.</p>
+<p>Simply knowing that California has <strong>30,000</strong> data science related jobs compared to say <strong>3500</strong> for Alaska really does not tell us all that much. Ideally, we want relative truth where we can get a sense of the number of H1B jobs per capita. So let's add population information from census.gov to help us do that.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [27]:</div>
+<div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -2259,7 +2080,7 @@ nan replaced with 100.0
 
 
 censusDF: (59, 2)
-Time to read and clean census data --- 0.2861607074737549 seconds ---
+Time to read and clean census data --- 0.40192627906799316 seconds ---
 </pre>
 </div>
 </div>
@@ -2271,13 +2092,13 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can add the census data to the job data.</p>
+<p>Now we can add the census data to our work visa data.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [28]:</div>
+<div class="prompt input_prompt">In [23]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF7</span> <span class="o">=</span> <span class="n">dsJobsDF6</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">censusDF</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Work_State'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'State'</span><span class="p">)</span>
@@ -2288,9 +2109,9 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="output_wrapper">
 <div class="output">
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>(208595, 24)</pre>
+<pre>(283323, 24)</pre>
 </div>
 </div>
 </div>
@@ -2310,13 +2131,13 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point, we can drop columns we clearly don't need. Here are the columns we have:</p>
+<p>At this point, we can drop columns we don't need. Here are the columns in our dataset.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [29]:</div>
+<div class="prompt input_prompt">In [24]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF7</span><span class="o">.</span><span class="n">columns</span>
@@ -2326,7 +2147,7 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="output_wrapper">
 <div class="output">
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>Index(['Submitted_Date', 'Case_Number', 'Employer_Name', 'Employer_City',
        'Employer_State', 'Employer_Postal_Code', 'Job_Title',
@@ -2343,7 +2164,7 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [30]:</div>
+<div class="prompt input_prompt">In [25]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF_final</span> <span class="o">=</span> <span class="n">dsJobsDF7</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">dsJobsDF7</span><span class="o">.</span><span class="n">columns</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">22</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -2358,13 +2179,13 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here's our final dataset and the retained columns.</p>
+<p>Here's our final dataset after dropping some columns.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [31]:</div>
+<div class="prompt input_prompt">In [26]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">dsJobsDF_final</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -2384,7 +2205,7 @@ Time to read and clean census data --- 0.2861607074737549 seconds ---
       dtype='object')
 
 
-dsJobsDF_final has 208595 rows and 10 columns
+dsJobsDF_final has 283323 rows and 10 columns
 </pre>
 </div>
 </div>
@@ -2405,13 +2226,13 @@ dsJobsDF_final has 208595 rows and 10 columns
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The data is now ready for prime time! We're going to use it to explore <a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html">Where the data science jobs are</a>. Before we save the data, let's quickly convert the date string in <code>Submitted_Date</code> column to <code>datetime</code> and then we can save away.</p>
+<p>The data is now ready for prime time! We're going to use it to explore <a href="https://github.com/sedeh/github.io/blob/master/projects/where_the_data_science_related_jobs_are_part2.ipynb">Where the data science related jobs are (part2)</a>. Before we save the data, let's quickly convert the date string in <code>Submitted_Date</code> column to <code>datetime</code> and then we can save away.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [32]:</div>
+<div class="prompt input_prompt">In [27]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dsJobsDF_final</span><span class="o">.</span><span class="n">Submitted_Date</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -2437,7 +2258,7 @@ dsJobsDF_final has 208595 rows and 10 columns
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [33]:</div>
+<div class="prompt input_prompt">In [28]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">dsJobsDF_final</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'dataScienceJobs.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -2448,7 +2269,7 @@ dsJobsDF_final has 208595 rows and 10 columns
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [34]:</div>
+<div class="prompt input_prompt">In [29]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">"Total time --- </span><span class="si">%s</span><span class="s2"> minutes ---"</span> <span class="o">%</span> <span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">total_time</span><span class="p">)</span> <span class="o">/</span> <span class="mf">60.0</span><span class="p">))</span>
@@ -2460,7 +2281,7 @@ dsJobsDF_final has 208595 rows and 10 columns
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Total time --- 8.932382055123647 minutes ---
+<pre>Total time --- 12.587802549203237 minutes ---
 </pre>
 </div>
 </div>
