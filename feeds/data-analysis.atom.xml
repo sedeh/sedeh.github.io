@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Samuel Edeh's Blog</title><link href="http://sedeh.github.io/" rel="alternate"></link><link href="http://sedeh.github.io/feeds/data-analysis.atom.xml" rel="self"></link><id>http://sedeh.github.io/</id><updated>2016-06-04T10:00:00-05:00</updated><entry><title>Where the data science related jobs are? (Part 2)</title><link href="http://sedeh.github.io/where-the-datascience-jobs-are-part2.html" rel="alternate"></link><published>2016-06-04T10:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-06-04:where-the-datascience-jobs-are-part2.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Samuel Edeh's Blog</title><link href="http://sedeh.github.io/" rel="alternate"></link><link href="http://sedeh.github.io/feeds/data-analysis.atom.xml" rel="self"></link><id>http://sedeh.github.io/</id><updated>2016-07-22T20:00:00-05:00</updated><entry><title>Where the data science related jobs are? (Part 2)</title><link href="http://sedeh.github.io/where-the-datascience-jobs-are-part2.html" rel="alternate"></link><published>2016-07-22T20:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-07-22:where-the-datascience-jobs-are-part2.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -985,7 +985,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This post is a continuation of &lt;a href="https://github.com/sedeh/github.io/blob/master/projects/where_the_data_science_related_jobs_are_part1.ipynb"&gt;Where the data science related jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
+&lt;p&gt;This post is a continuation of &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part1.html"&gt;Where the data science related jobs are (part 1)&lt;/a&gt;. In this installment, we're going to analyze the dataset we downloaded and cleaned in part 1. The dataset contains job information about non-U.S. workers. When a U.S. company wants to hire a foreign worker, the company is required to file a work visa (H1B) or permanent residencey (green card) application with the U.S. Department of Labor. As part of the application, the company must disclose how much U.S. workers in similar jobs are being paid. This is called &lt;code&gt;Prevailing Wage&lt;/code&gt;. The dataset only contains H1B data.&lt;/p&gt;
 &lt;p&gt;We can take advantage of this information to gain insights into the general U.S. job market. Specifically, we're going to look at data science related jobs. Assuming the prevailing wage theory is true, U.S. companies hire foreign workers because there are no qualified U.S. applicants to fill the roles. So a company that hires foreign workers likely also hires many U.S. workers. After all, they only hired non-U.S. workers becauses they have exhausted the pool of qualified U.S. applicants.&lt;/p&gt;
 &lt;p&gt;In part 1, we downloaded, cleaned and enriched the dataset. Now, let's probe the dataset (available &lt;a href="https://github.com/sedeh/github.io/tree/master/resources"&gt;here&lt;/a&gt; as &lt;code&gt;dataScienceJobs.csv&lt;/code&gt;). The dataset contains the following fields that are relevant to our current analysis.&lt;/p&gt;
 &lt;/div&gt;
@@ -1318,7 +1318,7 @@ dsJobs has 283323 rows and 10 columns
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="plotly data science jobs salary pandas tableau analysis"></category></entry><entry><title>Where the data science related jobs are? (Part 1)</title><link href="http://sedeh.github.io/where-the-datascience-jobs-are-part1.html" rel="alternate"></link><published>2016-05-04T10:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-05-04:where-the-datascience-jobs-are-part1.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+</summary></entry><entry><title>Where the data science related jobs are? (Part 1)</title><link href="http://sedeh.github.io/where-the-datascience-jobs-are-part1.html" rel="alternate"></link><published>2016-06-22T20:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-06-22:where-the-datascience-jobs-are-part1.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -2304,7 +2304,7 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;In this post, we're going to curate, clean and enrich messy work visa data from the U.S. Department of Labor. In the next installment, &lt;a href="https://github.com/sedeh/github.io/blob/master/projects/where_the_data_science_related_jobs_are_part2.ipynb"&gt;Where the data science related jobs are (part 2)&lt;/a&gt;, we'll probe the prepped dataset for insights and trends in data science related jobs, including:&lt;/p&gt;
+&lt;p&gt;In this post, we're going to curate, clean and enrich messy work visa data from the U.S. Department of Labor. In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html"&gt;Where the data science related jobs are (part 2)&lt;/a&gt;, we'll probe the prepped dataset for insights and trends in data science related jobs, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The Top 10 and Bottom 10 States for Data Science Related Jobs&lt;/li&gt;
 &lt;li&gt;The Top Paying States for Data Science Related Jobs&lt;/li&gt;
@@ -3505,7 +3505,7 @@ dsJobsDF_final has 283323 rows and 10 columns
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The data is now ready for prime time! We're going to use it to explore &lt;a href="https://github.com/sedeh/github.io/blob/master/projects/where_the_data_science_related_jobs_are_part2.ipynb"&gt;Where the data science related jobs are (part2)&lt;/a&gt;. Before we save the data, let's quickly convert the date string in &lt;code&gt;Submitted_Date&lt;/code&gt; column to &lt;code&gt;datetime&lt;/code&gt; and then we can save away.&lt;/p&gt;
+&lt;p&gt;The data is now ready for prime time! We're going to use it to explore &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html"&gt;Where the data science related jobs are (part2)&lt;/a&gt;. Before we save the data, let's quickly convert the date string in &lt;code&gt;Submitted_Date&lt;/code&gt; column to &lt;code&gt;datetime&lt;/code&gt; and then we can save away.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3594,4 +3594,4 @@ dsJobsDF_final has 283323 rows and 10 columns
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="data science jobs salary pandas tableau clean enrich"></category></entry></feed>
+</summary></entry></feed>

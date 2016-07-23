@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Samuel Edeh's Blog</title><link href="http://sedeh.github.io/" rel="alternate"></link><link href="http://sedeh.github.io/feeds/machine-learning.atom.xml" rel="self"></link><id>http://sedeh.github.io/</id><updated>2016-07-04T10:00:00-05:00</updated><entry><title>Predicting Google Stock Using Terrorism News</title><link href="http://sedeh.github.io/predicting-google-stock.html" rel="alternate"></link><published>2016-07-04T10:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-07-04:predicting-google-stock.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Samuel Edeh's Blog</title><link href="http://sedeh.github.io/" rel="alternate"></link><link href="http://sedeh.github.io/feeds/machine-learning.atom.xml" rel="self"></link><id>http://sedeh.github.io/</id><updated>2016-05-22T20:00:00-05:00</updated><entry><title>Predicting Google Stock Using Terrorism News</title><link href="http://sedeh.github.io/predicting-google-stock.html" rel="alternate"></link><published>2016-05-22T20:00:00-05:00</published><author><name>Samuel Edeh</name></author><id>tag:sedeh.github.io,2016-05-22:predicting-google-stock.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -3652,4 +3652,4 @@ $$terrorScores = \frac{Terrorism~events~in~news~or~social~media}{Total~news~or~s
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="sklearn machine learning classifier predictive model logistic regression svm"></category></entry></feed>
+</summary></entry></feed>
