@@ -500,14 +500,6 @@ dsJobs has 283323 rows and 10 columns
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Wouldn’t it be great if you knew where the data science related jobs are, the salary trends for those jobs across different states and companies? If you're a data professional, you could milk that for your job search. Even if you're not in the job market, this could make for an interesting coffee chat.&lt;/p&gt;
 &lt;p&gt;Along the way you'll see ideas that you can use in your own data science project. In real-world data science projects, you don't get a neatly packaged dataset you can browse. You have to get your own data, clean it, enrich it and do all that good stuff. In fact, this will take up 70% or more of your time.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;
-&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;In this post, we're going to curate, clean and enrich messy work visa data from the U.S. Department of Labor (DOL). In the next installment, &lt;a href="https://sedeh.github.io/where-the-datascience-jobs-are-part2.html"&gt;Where the data science related jobs are (part 2)&lt;/a&gt;, we'll probe the prepped dataset for insights and trends in data science related jobs, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The Top 10 and Bottom 10 States for Data Science Related Jobs&lt;/li&gt;
