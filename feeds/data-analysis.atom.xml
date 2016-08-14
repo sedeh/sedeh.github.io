@@ -85,7 +85,7 @@
 &lt;p&gt;Likely, you said pictures. And there is clear &lt;a href="http://www.pnas.org/content/95/5/2703.full"&gt;evidence&lt;/a&gt; to support you.&lt;/p&gt;
 &lt;p&gt;So, it makes sense to use pictures in your presentations to maximize results.&lt;/p&gt;
 &lt;p&gt;But that doesn't mean your presentation should be chock-full of images either.&lt;/p&gt;
-&lt;p&gt;In this post, we're going to analyze presentations from SlideShare to see how the number of images affect views.&lt;/p&gt;
+&lt;p&gt;In this post, we're going to analyze presentations from SlideShare to see how the number of images relate to views.&lt;/p&gt;
 &lt;p&gt;SlideShare is a global hub of professional content and presentations.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -503,7 +503,7 @@ NwAAAABJRU5ErkJggg==
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Explore-image-effect"&gt;Explore image effect&lt;a class="anchor-link" href="#Explore-image-effect"&gt;¶&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id="Explore-image-view-relationship"&gt;Explore image-view relationship&lt;a class="anchor-link" href="#Explore-image-view-relationship"&gt;¶&lt;/a&gt;&lt;/h2&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -724,7 +724,7 @@ zCyT/w/gnmbRN+ck/AAAAABJRU5ErkJggg==
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;It seems that the more images in the presentation the more views. That's fine and good but just counting the number of images in a presentation does not tell the whole story. A presentation may have &lt;strong&gt;100&lt;/strong&gt; slides and &lt;strong&gt;100&lt;/strong&gt; pictures and another presentation may have &lt;strong&gt;10&lt;/strong&gt; slides and &lt;strong&gt;100&lt;/strong&gt; pictures. The number of pictures are the same but images per slide are different and that seems like something we want to tease out.&lt;/p&gt;
 &lt;p&gt;We'll compute a new variable, &lt;code&gt;images_per_slide&lt;/code&gt;, to help us do that.&lt;/p&gt;
-&lt;p&gt;Also some presentations have been posted for &lt;strong&gt;100s&lt;/strong&gt; of days whereas other slides have been posted for &lt;strong&gt;1&lt;/strong&gt; day only. To get a sense of how popular a presentation is, we really need to know &lt;code&gt;views_per_day&lt;/code&gt;. Otherwise, we risk comparing apples to oranges.&lt;/p&gt;
+&lt;p&gt;Also some presentations have been posted for &lt;strong&gt;100s&lt;/strong&gt; of days whereas other slides have been posted for &lt;strong&gt;1&lt;/strong&gt; day only. To get a sense of how popular a presentation is, we really need to know &lt;code&gt;views_per_day&lt;/code&gt;. Otherwise, we'd be comparing apples to oranges.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1052,8 +1052,8 @@ OaEAIyIiOaEAIyIiOaEAIyIiOfH/AasBGZLA+O5LAAAAAElFTkSuQmCC
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;We've a significant p-value and a negative slope. While images are good for your presentations as we saw earlier, this plots says you shouldn't go overboard with it. The slope is negative suggesting that few images is better than lots of images.&lt;/p&gt;
-&lt;p&gt;Eye-balling the plot, it seems that most of the heavily viewed presentations cluster around &lt;strong&gt;1&lt;/strong&gt; or &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt;. So there you've your sweet spot. Aim for &lt;strong&gt;1&lt;/strong&gt; or &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; to maximize &lt;code&gt;views&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;We've a significant p-value and a negative slope. While images seem good for presentations as we saw earlier, this plot says you shouldn't go overboard with it. The slope is negative suggesting that few images is better than lots of images.&lt;/p&gt;
+&lt;p&gt;Eye-balling the plot, it seems that most of the heavily viewed presentations cluster around &lt;strong&gt;1&lt;/strong&gt; to &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt;. So there you've your sweet spot. Aim for &lt;strong&gt;1&lt;/strong&gt; to &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; to maximize &lt;code&gt;views&lt;/code&gt;!&lt;/p&gt;
 &lt;p&gt;We can do better than eye-balling though. Let's look at &lt;code&gt;images_per_slide&lt;/code&gt; for the &lt;strong&gt;Top 1&lt;/strong&gt; percent of presentations.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1256,8 +1256,8 @@ qVrErXrrVAAAAABJRU5ErkJggg==
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This is more precise than the &lt;strong&gt;1&lt;/strong&gt; or &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; from our eye-balling experiment.&lt;/p&gt;
-&lt;p&gt;Shoot for about &lt;strong&gt;3&lt;/strong&gt; images per &lt;strong&gt;2&lt;/strong&gt; slides in your presentations!&lt;/p&gt;
+&lt;p&gt;This is more precise than the &lt;strong&gt;1&lt;/strong&gt; to &lt;strong&gt;2&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; from our eye-balling experiment.&lt;/p&gt;
+&lt;p&gt;So shoot for about &lt;strong&gt;1.5&lt;/strong&gt; images per slide or &lt;strong&gt;3&lt;/strong&gt; images per &lt;strong&gt;2&lt;/strong&gt; slides in your presentations!&lt;/p&gt;
 &lt;p&gt;Let's see if we can visualize the cluster. We can use the elbow method as David W described in his &lt;a href="http://stats.stackexchange.com/a/10080"&gt;stackexchange answer&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1758,7 +1758,7 @@ U4gAEwRBEDSFCDBBEARBU4gAEwRBEDSF/wIxYRIse8ckxQAAAABJRU5ErkJggg==
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;The yellow cluster contains the presentations with the highest &lt;code&gt;views_per_day&lt;/code&gt;. And it does seem the cluster is centered around &lt;strong&gt;1.5&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;So whether you eye-ball it, take &lt;strong&gt;Top 1&lt;/strong&gt; percent, or cluster it, you come to the conclusion: &lt;strong&gt;1.5&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; could help you go viral on SlideShare.&lt;/p&gt;
+&lt;p&gt;So whether you eye-ball it, take &lt;strong&gt;Top 1&lt;/strong&gt; percent, or cluster it, you come to the same conclusion: &lt;strong&gt;1.5&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; could help you go viral on SlideShare.&lt;/p&gt;
 &lt;p&gt;Of course, &lt;a href="https://blog.slideshare.net/2015/12/01/the-complete-beginners-guide-to-slide-decks-10-actionable-slideshare-tips-for-maximum-results"&gt;other things&lt;/a&gt; need to come together to create a SlideShare sensation. Do make sure you're milking the &lt;strong&gt;1.5&lt;/strong&gt; &lt;code&gt;images_per_slide&lt;/code&gt; sweet spot.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
