@@ -106,7 +106,7 @@
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The data contains statistics on SlideShare presentations. Let's load the data and see what it looks like. The data, &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/presentations.csv"&gt;presentations.csv&lt;/a&gt;, was obtained using &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/slideshare_downloader.py"&gt;slideshare_downloader.py&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The data contains statistics on SlideShare presentations. Let's load the data and see what it looks like. I extracted the data &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/presentations.csv"&gt;presentations.csv&lt;/a&gt; from SlideShare using &lt;a href="https://github.com/sedeh/github.io/blob/master/resources/slideshare_downloader.py"&gt;slideshare_downloader.py&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
