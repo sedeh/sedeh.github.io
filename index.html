@@ -118,7 +118,7 @@
 <p>What do you remember better? Pictures or words?</p>
 <p>Likely, you said pictures. And there is clear <a href="http://www.pnas.org/content/95/5/2703.full">evidence</a> to support you.</p>
 <p>So, it makes sense to use pictures in your presentations to maximize results.</p>
-<blockquote><h3 id="The-more-stunning-images-you-can-include,-the-better.--—-SlideShare.net">The more stunning images you can include, the better.  — <a href="https://blog.slideshare.net/2015/12/01/the-complete-beginners-guide-to-slide-decks-10-actionable-slideshare-tips-for-maximum-results">SlideShare.net</a><a class="anchor-link" href="#The-more-stunning-images-you-can-include,-the-better.--—-SlideShare.net">¶</a></h3>
+<blockquote><h3 id="The-more-stunning-images-you-can-include,-the-better.--—-SlideShare-Blog">The more stunning images you can include, the better.  — <a href="https://blog.slideshare.net/2015/12/01/the-complete-beginners-guide-to-slide-decks-10-actionable-slideshare-tips-for-maximum-results">SlideShare Blog</a><a class="anchor-link" href="#The-more-stunning-images-you-can-include,-the-better.--—-SlideShare-Blog">¶</a></h3>
 </blockquote>
 <p>Hmm. Does that mean your presentation should be chock-full of images? After all, the more the better?</p>
 <p>In this post, we're going to analyze presentations from SlideShare and try to determine the number of images that maximizes views. You know that images work but nobody ever told you how many images to shoot for. Today you are in luck.</p>
@@ -140,7 +140,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The data contains statistics on SlideShare presentations. Let's load the data and see what it looks like. I extracted the data <a href="https://github.com/sedeh/github.io/blob/master/resources/presentations.csv">presentations.csv</a> from SlideShare using <a href="https://github.com/sedeh/github.io/blob/master/resources/slideshare_downloader.py">slideshare_downloader.py</a>.</p>
+<p>The data contains statistics on SlideShare presentations. Let's load the data and see what it looks like. I extracted the data <a href="https://github.com/sedeh/github.io/blob/master/resources/presentations.csv">presentations.csv</a> from SlideShare using my script <a href="https://github.com/sedeh/github.io/blob/master/resources/slideshare_downloader.py">here</a>.</p>
 </div>
 </div>
 </div>
@@ -153,8 +153,10 @@
 <span class="n">presns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"presentations.csv"</span><span class="p">)</span>
 
 <span class="c"># Select relevant columns</span>
-<span class="n">presns</span> <span class="o">=</span> <span class="n">presns</span><span class="p">[[</span><span class="s">'views'</span><span class="p">,</span> <span class="s">'days_posted'</span><span class="p">,</span> <span class="s">'comments'</span><span class="p">,</span> <span class="s">'likes'</span><span class="p">,</span> <span class="s">'total_images'</span><span class="p">,</span> <span class="s">'total_slides'</span><span class="p">,</span> <span class="s">'tweets'</span><span class="p">]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s">"The data contains {0} presentations and {1} stats per presentation."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">presns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">presns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">presns</span> <span class="o">=</span> <span class="n">presns</span><span class="p">[[</span><span class="s">'views'</span><span class="p">,</span> <span class="s">'days_posted'</span><span class="p">,</span> <span class="s">'comments'</span><span class="p">,</span> <span class="s">'likes'</span><span class="p">,</span> \
+                 <span class="s">'total_images'</span><span class="p">,</span> <span class="s">'total_slides'</span><span class="p">,</span> <span class="s">'tweets'</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s">"The data contains {0} presentations and {1} stats per </span><span class="se">\</span>
+<span class="s">presentation."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">presns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">presns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">presns</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
@@ -218,7 +220,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [3]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -244,7 +246,10 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s">"p-value: {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plot_stats</span><span class="o">.</span><span class="n">pvalue</span><span class="p">))</span>
-
+    
+    <span class="c">#fig = plt.figure()</span>
+    <span class="c">#fig.savefig("fig1.png")</span>
+    
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s">"Slope: {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plot_stats</span><span class="o">.</span><span class="n">slope</span><span class="p">))</span>
@@ -275,7 +280,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [4]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">y</span> <span class="o">=</span> <span class="n">presns</span><span class="o">.</span><span class="n">comments</span>
@@ -559,7 +564,7 @@ SiIiIpIwJREREUmYkoiIiCRMSURERBKmJCIiIgn7fz5oI8GvtB9oAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [5]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">y</span> <span class="o">=</span> <span class="n">presns</span><span class="o">.</span><span class="n">views</span>
@@ -771,7 +776,7 @@ EBLlH/MAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [6]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="c"># It's okay to turn off panda's warning for this analysis</span>
@@ -821,7 +826,7 @@ EBLlH/MAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [7]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">y</span> <span class="o">=</span> <span class="n">presns</span><span class="o">.</span><span class="n">views_per_day</span>
@@ -1098,13 +1103,14 @@ kaxQgBERkaxQgBERkaxQgBERkaz4/2DaZ/1VZzxpAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [8]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">presns2</span> <span class="o">=</span> <span class="n">presns</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'views_per_day'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
 <span class="n">nrows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">presns2</span><span class="p">)</span>
 <span class="n">top1</span> <span class="o">=</span> <span class="n">presns2</span><span class="o">.</span><span class="n">images_per_slide</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.01</span><span class="o">*</span><span class="n">nrows</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s">"Top 1 percent of presentations had {0} to {1} images per slide. "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">top1</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">top1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s">"Top 1 percent of presentations had {0} to {1} </span><span class="se">\</span>
+<span class="s">images per slide. "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">top1</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">top1</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -1132,10 +1138,10 @@ kaxQgBERkaxQgBERkaxQgBERkaz4/2DaZ/1VZzxpAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [9]:</div>
+<div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="c"># Hstogram of distribution</span>
+<div class=" highlight hl-ipython3"><pre><span class="c"># Histogram of distribution</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">top1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Images per slide'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
@@ -1270,10 +1276,12 @@ eWAYfK1oIgAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [10]:</div>
+<div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="nb">print</span><span class="p">(</span><span class="s">"The Top 1 percent has {0} median images per slide. "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">top1_views</span> <span class="o">=</span> <span class="n">presns2</span><span class="o">.</span><span class="n">views_per_day</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.01</span><span class="o">*</span><span class="n">nrows</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s">"The Top 1 percent had {0} median images per slide."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s">"And they had {0} median views per day."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1_views</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
@@ -1282,7 +1290,8 @@ eWAYfK1oIgAAAABJRU5ErkJggg==
 <div class="output">
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>The Top 1 percent has 1.5593220338983051 median images per slide. 
+<pre>The Top 1 percent had 1.5593220338983051 median images per slide.
+And they had 2316.0096540627515 median views per day.
 </pre>
 </div>
 </div>
@@ -1302,7 +1311,7 @@ eWAYfK1oIgAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [11]:</div>
+<div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="c"># Convert to numpy array for use with scipy</span>
